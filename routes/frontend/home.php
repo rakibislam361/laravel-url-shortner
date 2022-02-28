@@ -1,13 +1,17 @@
 <?php
 
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\TermsController;
+
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\UrlShortnerController;
+use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
+
 Route::get('/', [HomeController::class, 'index'])
     ->name('index')
     ->breadcrumbs(function (Trail $trail) {
@@ -20,3 +24,4 @@ Route::get('terms', [TermsController::class, 'index'])
         $trail->parent('frontend.index')
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
+Route::resource('url_shortener', UrlShortnerController::class);

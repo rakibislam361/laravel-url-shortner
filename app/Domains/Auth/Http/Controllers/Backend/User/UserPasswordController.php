@@ -30,6 +30,7 @@ class UserPasswordController
     /**
      * @param  EditUserPasswordRequest  $request
      * @param  User  $user
+     *
      * @return mixed
      */
     public function edit(EditUserPasswordRequest $request, User $user)
@@ -41,8 +42,8 @@ class UserPasswordController
     /**
      * @param  UpdateUserPasswordRequest  $request
      * @param  User  $user
-     * @return mixed
      *
+     * @return mixed
      * @throws \Throwable
      */
     public function update(UpdateUserPasswordRequest $request, User $user)

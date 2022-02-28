@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,29 +11,62 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('public')
-    .setResourceRoot('../') // Turns assets paths in css relative to css file
-    .vue()
-    .sass('resources/sass/frontend/app.scss', 'css/frontend.css')
-    .sass('resources/sass/backend/app.scss', 'css/backend.css')
-    .js('resources/js/frontend/app.js', 'js/frontend.js')
-    .js('resources/js/backend/app.js', 'js/backend.js')
+mix.setPublicPath("public")
+    .setResourceRoot("../") // Turns assets paths in css relative to css file
+    .react()
+    .sass("resources/sass/frontend/app.scss", "css/frontend.css")
+    .sass("resources/sass/backend/app.scss", "css/backend.css")
+    .sass("resources/sass/backend/extend.scss", "css/admin/extend.css")
+    .js("resources/js/frontend/app.js", "js/frontend.js")
+    .js("resources/js/backend/app.js", "js/backend.js")
     .extract([
-        'alpinejs',
-        'jquery',
-        'bootstrap',
-        'popper.js',
-        'axios',
-        'sweetalert2',
-        'lodash'
+        "alpinejs",
+        "jquery",
+        "bootstrap",
+        "popper.js",
+        "axios",
+        "sweetalert2",
+        "lodash",
     ])
     .sourceMaps();
 
 if (mix.inProduction()) {
-    mix.version();
+    mix.setPublicPath("public")
+        .setResourceRoot("../")
+        .combine(
+            [
+                "resources/css/icons/fontAwesome/css/all.css",
+                "resources/css/icons/ionicons.min.css",
+                "resources/css/icons/themify-icons.css",
+                "resources/css/icons/linearicons.css",
+                "resources/css/icons/flaticon.css",
+                "resources/css/icons/simple-line-icons.css",
+            ],
+            "public/css/icons.css"
+        )
+        .combine(
+            [
+                "resources/css/admin-lte/css/adminlte.css",
+            ],
+            "public/css/admin/adminlte.css"
+        )
+        .combine(
+            [
+                "resources/js/backend/plugins/tinymce/jquery.tinymce.js",
+                "resources/js/backend/plugins/tinymce/tinymce.js",
+                "resources/js/backend/plugins/tinymce/editor-helper.js"
+            ],
+            "public/js/admin/editor.js"
+        )
+        .copyDirectory("resources/css/fonts", "public/fonts/")
+        .copyDirectory(
+            "resources/css/icons/fontawesome/webfonts",
+            "public/webfonts/"
+        )
+        .version();
 } else {
     // Uses inline source-maps on development
     mix.webpackConfig({
-        devtool: 'inline-source-map'
+        devtool: "inline-source-map",
     });
 }

@@ -57,8 +57,8 @@ class RoleController
 
     /**
      * @param  StoreRoleRequest  $request
-     * @return mixed
      *
+     * @return mixed
      * @throws \App\Exceptions\GeneralException
      * @throws \Throwable
      */
@@ -72,6 +72,7 @@ class RoleController
     /**
      * @param  EditRoleRequest  $request
      * @param  Role  $role
+     *
      * @return mixed
      */
     public function edit(EditRoleRequest $request, Role $role)
@@ -86,8 +87,8 @@ class RoleController
     /**
      * @param  UpdateRoleRequest  $request
      * @param  Role  $role
-     * @return mixed
      *
+     * @return mixed
      * @throws \App\Exceptions\GeneralException
      * @throws \Throwable
      */
@@ -101,8 +102,8 @@ class RoleController
     /**
      * @param  DeleteRoleRequest  $request
      * @param  Role  $role
-     * @return mixed
      *
+     * @return mixed
      * @throws \Exception
      */
     public function destroy(DeleteRoleRequest $request, Role $role)

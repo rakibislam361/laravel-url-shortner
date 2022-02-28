@@ -11,21 +11,28 @@
     "require": {
         "php": "^7.4|^8.0",
         "arcanedev/log-viewer": "8.x",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "darkghosthunter/laraguard": "^3.0",
+        "fideloper/proxy": "^4.4",
+        "firebase/php-jwt": "^5.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "infinety/alerts": "*@dev",
+        "intervention/image": "^2.6",
         "jamesmills/laravel-timezone": "^1.9",
         "lab404/laravel-impersonate": "^1.6",
         "langleyfoxall/laravel-nist-password-rules": "^4.1",
-        "laravel/framework": "^8.54",
-        "laravel/sanctum": "^2.11",
+        "laravel/framework": "^8.40",
         "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
         "livewire/livewire": "^2.0",
+        "maatwebsite/excel": "^3.1",
+        "mailjet/laravel-mailjet": "^3.0",
         "rappasoft/laravel-livewire-tables": "^1.0",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-html": "^2.30",
         "spatie/laravel-permission": "^3.11",
         "tabuna/breadcrumbs": "^2.2"
     },
@@ -59,16 +66,15 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi",
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:meta"
-        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta"
         ],
         "clear-all": [
             "@php artisan clear-compiled",
@@ -98,7 +104,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

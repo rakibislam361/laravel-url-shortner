@@ -13,6 +13,7 @@ class ProfileController
     /**
      * @param  UpdateProfileRequest  $request
      * @param  UserService  $userService
+     *
      * @return mixed
      */
     public function update(UpdateProfileRequest $request, UserService $userService)

@@ -13,6 +13,7 @@ class AdminCheck
     /**
      * @param $request
      * @param  Closure  $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

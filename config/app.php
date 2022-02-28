@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,7 +161,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Infinety\Alerts\AlertServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -179,6 +180,10 @@ return [
         App\Providers\LocaleServiceProvider::class,
         App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // mailjet providers
+        Mailjet\LaravelMailjet\MailjetServiceProvider::class,
+        Mailjet\LaravelMailjet\MailjetMailServiceProvider::class,
 
     ],
 
@@ -233,7 +238,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
+        // mailjet aliases
+        'Mailjet' => Mailjet\LaravelMailjet\Facades\Mailjet::class,
     ],
 
 ];

@@ -7,11 +7,11 @@ namespace App\Http\Controllers\Frontend;
  */
 class TermsController
 {
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function index()
-    {
-        return view('frontend.pages.terms');
-    }
+  /**
+   * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+   */
+  public function index()
+  {
+    return view('frontend.pages.terms');
+  }
 }

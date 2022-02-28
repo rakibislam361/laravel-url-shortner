@@ -8,6 +8,8 @@ use App\Domains\Auth\Models\Traits\Relationship\UserRelationship;
 use App\Domains\Auth\Models\Traits\Scope\UserScope;
 use App\Domains\Auth\Notifications\Frontend\ResetPasswordNotification;
 use App\Domains\Auth\Notifications\Frontend\VerifyEmail;
+use App\Models\Agent;
+use App\Models\Member;
 use DarkGhostHunter\Laraguard\Contracts\TwoFactorAuthenticatable;
 use DarkGhostHunter\Laraguard\TwoFactorAuthentication;
 use Database\Factories\UserFactory;
@@ -18,7 +20,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
-use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -26,8 +27,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenticatable
 {
-    use HasApiTokens,
-        HasFactory,
+    use HasFactory,
         HasRoles,
         Impersonate,
         MustVerifyEmailTrait,
@@ -64,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for arrays.
      *
      * @var array
      */
@@ -83,7 +83,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
@@ -132,7 +132,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
      * Return true or false if the user can impersonate an other user.
      *
      * @param void
-     * @return bool
+     * @return  bool
      */
     public function canImpersonate(): bool
     {
@@ -143,11 +143,11 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
      * Return true or false if the user can be impersonate.
      *
      * @param void
-     * @return bool
+     * @return  bool
      */
     public function canBeImpersonated(): bool
     {
-        return ! $this->isMasterAdmin();
+        return !$this->isMasterAdmin();
     }
 
     /**

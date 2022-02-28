@@ -9,6 +9,7 @@ trait AnnouncementScope
 {
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeEnabled($query)
@@ -19,6 +20,7 @@ trait AnnouncementScope
     /**
      * @param $query
      * @param $area
+     *
      * @return mixed
      */
     public function scopeForArea($query, $area)
@@ -31,6 +33,7 @@ trait AnnouncementScope
 
     /**
      * @param $query
+     *
      * @return mixed
      */
     public function scopeInTimeFrame($query)

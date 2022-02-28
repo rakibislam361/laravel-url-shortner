@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'mailjet'),
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,9 @@ return [
         'ses' => [
             'transport' => 'ses',
         ],
-
+        'mailjet' => [
+            'transport' => 'mailjet',
+        ],
         'mailgun' => [
             'transport' => 'mailgun',
         ],
@@ -69,14 +71,6 @@ return [
 
         'array' => [
             'transport' => 'array',
-        ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
         ],
     ],
 

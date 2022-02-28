@@ -1,11 +1,11 @@
 /coverage
 /node_modules
-/public/css
-/public/js
-/public/fonts
 /public/hot
+/public/img
 /public/storage
-/public/mix-manifest.json
+/public/uploads
+/public/uploads/users
+/public/uploadedimages
 /storage/*.key
 /vendor
 /.vscode
@@ -14,6 +14,7 @@
 _ide_helper.php
 .DS_Store
 .env
+.htaccess
 .env.backup
 .idea
 .php_cs.cache

@@ -1,102 +1,95 @@
-<div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-    <div class="c-sidebar-brand d-lg-down-none">
-        <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('img/brand/coreui.svg#full') }}"></use>
-        </svg>
-        <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('img/brand/coreui.svg#signet') }}"></use>
-        </svg>
-    </div><!--c-sidebar-brand-->
+<aside class="main-sidebar sidebar-light-lightblue elevation-0">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
+        <img sizes="32x32" src="{{ asset('img/logo/small-logo.png') }}" alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">URL SHORTNER</span>
+    </a>
 
-    <ul class="c-sidebar-nav">
-        <li class="c-sidebar-nav-item">
-            <x-utils.link
-                class="c-sidebar-nav-link"
-                :href="route('admin.dashboard')"
-                :active="activeClass(Route::is('admin.dashboard'), 'c-active')"
-                icon="c-sidebar-nav-icon cil-speedometer"
-                :text="__('Dashboard')" />
-        </li>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <x-utils.link class="nav-link" :href="route('admin.dashboard')"
+                        :active="activeClass(Route::is('admin.dashboard'), 'active')"
+                        icon="nav-icon fa fa-tachometer-alt" :text="__('Dashboard')"></x-utils.link>
+                </li>
 
-        @if (
-            $logged_in_user->hasAllAccess() ||
-            (
-                $logged_in_user->can('admin.access.user.list') ||
-                $logged_in_user->can('admin.access.user.deactivate') ||
-                $logged_in_user->can('admin.access.user.reactivate') ||
-                $logged_in_user->can('admin.access.user.clear-session') ||
-                $logged_in_user->can('admin.access.user.impersonate') ||
-                $logged_in_user->can('admin.access.user.change-password')
-            )
-        )
-            <li class="c-sidebar-nav-title">@lang('System')</li>
+                <i class="fa-solid "></i>
+                @if ($logged_in_user->hasAllAccess() || ($logged_in_user->can('admin.access.user.list') || $logged_in_user->can('admin.access.user.deactivate') || $logged_in_user->can('admin.access.user.reactivate') || $logged_in_user->can('admin.access.user.clear-session') || $logged_in_user->can('admin.access.user.impersonate') || $logged_in_user->can('admin.access.user.change-password')))
+                    <li class="nav-header">@lang('System')</li>
 
-            <li class="c-sidebar-nav-dropdown {{ activeClass(Route::is('admin.auth.user.*') || Route::is('admin.auth.role.*'), 'c-open c-show') }}">
-                <x-utils.link
-                    href="#"
-                    icon="c-sidebar-nav-icon cil-user"
-                    class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Access')" />
-
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @if (
-                        $logged_in_user->hasAllAccess() ||
-                        (
-                            $logged_in_user->can('admin.access.user.list') ||
-                            $logged_in_user->can('admin.access.user.deactivate') ||
-                            $logged_in_user->can('admin.access.user.reactivate') ||
-                            $logged_in_user->can('admin.access.user.clear-session') ||
-                            $logged_in_user->can('admin.access.user.impersonate') ||
-                            $logged_in_user->can('admin.access.user.change-password')
-                        )
-                    )
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                                :href="route('admin.auth.user.index')"
-                                class="c-sidebar-nav-link"
-                                :text="__('User Management')"
-                                :active="activeClass(Route::is('admin.auth.user.*'), 'c-active')" />
-                        </li>
-                    @endif
-
-                    @if ($logged_in_user->hasAllAccess())
-                        <li class="c-sidebar-nav-item">
-                            <x-utils.link
-                                :href="route('admin.auth.role.index')"
-                                class="c-sidebar-nav-link"
-                                :text="__('Role Management')"
-                                :active="activeClass(Route::is('admin.auth.role.*'), 'c-active')" />
-                        </li>
-                    @endif
-                </ul>
-            </li>
-        @endif
-
-        @if ($logged_in_user->hasAllAccess())
-            <li class="c-sidebar-nav-dropdown">
-                <x-utils.link
-                    href="#"
-                    icon="c-sidebar-nav-icon cil-list"
-                    class="c-sidebar-nav-dropdown-toggle"
-                    :text="__('Logs')" />
-
-                <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link
-                            :href="route('log-viewer::dashboard')"
-                            class="c-sidebar-nav-link"
-                            :text="__('Dashboard')" />
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon icon-settings"></i>
+                            <p>@lang('Settings')
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <x-utils.link class="nav-link" :href="route('admin.dashboard')"
+                                    :active="activeClass(Route::is('admin.dashboard'), 'active')"
+                                    icon="fas fa-solid fa-minus" :text="__('Initial')">
+                                </x-utils.link>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="c-sidebar-nav-item">
-                        <x-utils.link
-                            :href="route('log-viewer::logs.list')"
-                            class="c-sidebar-nav-link"
-                            :text="__('Logs')" />
-                    </li>
-                </ul>
-            </li>
-        @endif
-    </ul>
 
-    <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
-</div><!--sidebar-->
+                    <li
+                        class="nav-item has-treeview {{ activeClass(Route::is('admin.auth.user.*') || Route::is('admin.auth.role.*'), 'menu-open') }}">
+                        <x-utils.link class="nav-link" href="#" icon="nav-icon icon-users"
+                            rightIcon="fa fa-angle-left right" :text="__('Access')"></x-utils.link>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <x-utils.link class="nav-link" :href="url('admin.permission-control.index')"
+                                    :active="activeClass(Route::is('admin.permission-control.*'), 'active')"
+                                    icon="nav-icon fas fas fa-long-arrow-alt-right" :text="__('Control Permission')">
+                                </x-utils.link>
+                            </li>
+
+                            @if ($logged_in_user->hasAllAccess() || ($logged_in_user->can('admin.access.user.list') || $logged_in_user->can('admin.access.user.deactivate') || $logged_in_user->can('admin.access.user.reactivate') || $logged_in_user->can('admin.access.user.clear-session') || $logged_in_user->can('admin.access.user.impersonate') || $logged_in_user->can('admin.access.user.change-password')))
+                                <li class="nav-item">
+                                    <x-utils.link class="nav-link" :href="route('admin.auth.user.index')"
+                                        :active="activeClass(Route::is('admin.auth.user.*'), 'active')"
+                                        icon="nav-icon fas fa-long-arrow-alt-right" :text="__('User Management')">
+                                    </x-utils.link>
+                                </li>
+                            @endif
+
+                            @if ($logged_in_user->hasAllAccess())
+                                <li class="nav-item">
+                                    <x-utils.link class="nav-link" :href="route('admin.auth.role.index')"
+                                        icon="nav-icon fas fa-long-arrow-alt-right"
+                                        :active="activeClass(Route::is('admin.auth.role.*'), 'active')"
+                                        :text="__('Role Management')">
+                                    </x-utils.link>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+
+                @if ($logged_in_user->hasAllAccess())
+                    <li class="nav-item has-treeview">
+                        <x-utils.link class="nav-link" href="#" icon="nav-icon fa fa-list-ul"
+                            rightIcon="fa fa-angle-left right" :text="__('Logs')"></x-utils.link>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <x-utils.link class="nav-link" :href="route('log-viewer::dashboard')"
+                                    icon="nav-icon fas fa-long-arrow-alt-right" :text="__('Dashboard')">
+                                </x-utils.link>
+                            </li>
+                            <li class="nav-item">
+                                <x-utils.link class="nav-link" :href="route('log-viewer::logs.list')"
+                                    icon="nav-icon fas fa-long-arrow-alt-right" :text="__('Logs')"></x-utils.link>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+            </ul>
+        </nav> <!-- /.sidebar-menu -->
+    </div> <!-- /.sidebar -->
+</aside>

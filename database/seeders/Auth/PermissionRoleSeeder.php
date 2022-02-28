@@ -6,6 +6,7 @@ use App\Domains\Auth\Models\Permission;
 use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
 use Database\Seeders\Traits\DisableForeignKeys;
+use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Seeder;
 
 /**
@@ -13,7 +14,7 @@ use Illuminate\Database\Seeder;
  */
 class PermissionRoleSeeder extends Seeder
 {
-    use DisableForeignKeys;
+    use DisableForeignKeys, TruncateTable;
 
     /**
      * Run the database seed.
@@ -23,26 +24,26 @@ class PermissionRoleSeeder extends Seeder
         $this->disableForeignKeys();
 
         // Create Roles
-        Role::create([
+        Role::updateOrCreate(['id' => 1], [
             'id' => 1,
-            'type' => User::TYPE_ADMIN,
+            'type' => 'admin',
             'name' => 'Administrator',
         ]);
 
         // Non Grouped Permissions
-        //
+        $this->truncate('permissions');
 
         // Grouped permissions
         // Users category
         $users = Permission::create([
-            'type' => User::TYPE_ADMIN,
+            'type' => 'admin',
             'name' => 'admin.access.user',
             'description' => 'All User Permissions',
         ]);
 
         $users->children()->saveMany([
             new Permission([
-                'type' => User::TYPE_ADMIN,
+                'type' => 'admin',
                 'name' => 'admin.access.user.list',
                 'description' => 'View Users',
             ]),
@@ -76,10 +77,42 @@ class PermissionRoleSeeder extends Seeder
                 'description' => 'Change User Passwords',
                 'sort' => 6,
             ]),
+            new Permission([
+                'type' => 'admin',
+                'name' => 'agent.access.member.list',
+                'description' => 'Access member list',
+                'sort' => 7,
+            ]),
+            new Permission([
+                'type' => 'admin',
+                'name' => 'agent.show.member',
+                'description' => 'Show member details',
+                'sort' => 8,
+            ]),
+            new Permission([
+                'type' => 'admin',
+                'name' => 'agent.update.member',
+                'description' => 'Agent can be update member information',
+                'sort' => 9,
+            ]),
+            new Permission([
+                'type' => 'admin',
+                'name' => 'agent.destroy.member',
+                'description' => 'Agent can be delete member',
+                'sort' => 10,
+            ]),
+            new Permission([
+                'type' => 'admin',
+                'name' => 'agent.create.member',
+                'description' => 'Agent can be create member',
+                'sort' => 11,
+            ]),
+
         ]);
 
+        // php artisan db:seed --class="Database\\Seeders\\Auth\\PermissionRoleSeeder"
+
         // Assign Permissions to other Roles
-        //
 
         $this->enableForeignKeys();
     }

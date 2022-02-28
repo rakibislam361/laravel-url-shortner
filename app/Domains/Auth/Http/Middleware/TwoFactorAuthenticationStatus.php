@@ -13,6 +13,7 @@ class TwoFactorAuthenticationStatus
      * @param $request
      * @param  Closure  $next
      * @param  string  $status
+     *
      * @return mixed
      */
     public function handle($request, Closure $next, $status = 'enabled')

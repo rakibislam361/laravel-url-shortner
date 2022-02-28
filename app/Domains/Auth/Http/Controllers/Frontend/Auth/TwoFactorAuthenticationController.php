@@ -11,6 +11,7 @@ class TwoFactorAuthenticationController
 {
     /**
      * @param  Request  $request
+     *
      * @return mixed
      */
     public function create(Request $request)
@@ -24,6 +25,7 @@ class TwoFactorAuthenticationController
 
     /**
      * @param  Request  $request
+     *
      * @return mixed
      */
     public function show(Request $request)
@@ -34,6 +36,7 @@ class TwoFactorAuthenticationController
 
     /**
      * @param  Request  $request
+     *
      * @return mixed
      */
     public function update(Request $request)
