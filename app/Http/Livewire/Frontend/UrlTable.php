@@ -6,6 +6,7 @@ use App\Models\Url;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /**
  * Class RolesTable.
@@ -20,9 +21,11 @@ class UrlTable extends DataTableComponent
   public function query(): Builder
   {
     if (auth()->user() && auth()->user()->type === "user") {
-      return Url::with('user')->where('user_id', auth()->user()->id);
+      $data = Url::with('user')->where('user_id', auth()->user()->id);
+    } else {
+      $data = Url::with('user');
     }
-    return Url::with('user');
+    return $data;
   }
 
   /**
@@ -47,14 +50,16 @@ class UrlTable extends DataTableComponent
       Column::make(__('Your URL'), 'url')
         ->addClass('text-left')
         ->searchable(),
-
-      // Column::make('Actions')
-      //   ->addClass('text-center')
-      //   ->format(function ($value, $column, $row) {
-      //     return view('frontend.content.url.includes.actions')->with(['url' => $row]);
-      //   }),
+      Column::make(__('GET QRL'), 'url')
+        ->addClass('text-left')
+        ->searchable()
+        ->format(function ($value) {
+          return '<label data-key="' . $value . '"  class="btn btn-light qr_code"><i class="fa fa-qrcode" aria-hidden="true"></i></label>';
+        })
+        ->asHtml(),
     ];
   }
+
 
   public function setTableRowClass($value)
   {

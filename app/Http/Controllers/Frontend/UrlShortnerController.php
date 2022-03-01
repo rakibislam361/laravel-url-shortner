@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\BrowserHelper;
 use App\Http\Controllers\Controller;
+use App\Models\BowsingInformation;
 use App\Models\Url;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use QrCode;
 
 class UrlShortnerController extends Controller
 {
@@ -41,9 +44,8 @@ class UrlShortnerController extends Controller
         session(['url' => $request->url]);
 
         if (Auth::check()) {
-            $url_regex_check = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
             $request->validate([
-                'url' => 'required|regex:' . $url_regex_check,
+                'url' => 'required|url',
             ]);
 
             if (!Url::where('url', $request->url)->exists()) {
@@ -76,6 +78,9 @@ class UrlShortnerController extends Controller
         $url = Url::findOrFail($id);
         if ($url) {
             $redirect_url = $url->url;
+            $browser_information = $this->getBrosingInformation();
+            $browser_information['visit_url'] = $redirect_url;
+            BowsingInformation::create($browser_information);
             return redirect($redirect_url);
         }
     }
@@ -114,5 +119,36 @@ class UrlShortnerController extends Controller
         if (Url::destroy($id)) {
             return redirect()->back()->withFlashWithSuccess("Url deleted Success fully");
         }
+    }
+
+
+    public function qurCodeGenerate(Request $request)
+    {
+        $qrcode = QrCode::size(465)->generate($request->data);
+        return $qrcode;
+    }
+
+    public function getBrosingInformation()
+    {
+        $getip = BrowserHelper::get_ip();
+        $getbrowser = BrowserHelper::get_browsers();
+        $getdevice = BrowserHelper::get_device();
+        $getos = BrowserHelper::get_os();
+
+        $location = GeoIP($getip);
+        $data = [
+            'user_id' => auth()->user()->id,
+            'user_ip' => $getip,
+            'location' => $location->country,
+            'latitude' => $location->lat,
+            'longitude' => $location->lon,
+            'browser' => $getbrowser,
+            'device' => $getdevice,
+            'active_status' => auth()->user()->isActive(),
+            'previous_url' => "",
+            'visit_url' => "",
+        ];
+
+        return $data;
     }
 }

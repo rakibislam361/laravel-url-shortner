@@ -307,16 +307,6 @@ function swal_alert(alert_icon, msg) {
                 allItem.prop('checked', false);
             }
         })
-        .on("change", ".checkbox-item", function () {
-            var tbodyItems = $(this).closest('tbody').find(".checkbox-item");
-            var checkedItem = $(this).closest('tbody').find(".checkbox-item:checked");
-            var allItem = $(".checkbox-all");
-            if (tbodyItems.length === checkedItem.length) {
-                allItem.prop('checked', true);
-            } else {
-                allItem.prop('checked', false);
-            }
-        })
         .on("change", ".checkbox-item, .checkbox-all", function () {
             var checkedItem = $('tbody').find(".checkbox-item:checked");
             var generate = $(".generate-email");
@@ -368,116 +358,6 @@ function swal_alert(alert_icon, msg) {
                 })
             }
         })
-        .on("change", ".company-select", function (e) {
-            e.preventDefault();
-            var option = $(this).val();
-            axios.post('/admin/company-select', {
-                    data: option
-                })
-                .then(response => {
-                    const resData = response.data.email;
-                    $('#email').val(resData);
-                })
-                .catch(error => {
-                    console.log(error)
-                    $('#emailSendToCompany').val('');
-                })
-                .then(() => {});
-        })
-        .on('change', "#district_permanent", function () {
-            var upazilla = JSON.parse($("#upazilla").val());
-            var selected_district = $(this).children("option:selected").val();
-            var upazilla_name = '';
-            upazilla.forEach(element => {
-                if (element.district_id == selected_district) {
-                    upazilla_name += '<option value="' + element.id + '">' + element.name + '</option>';
-                }
-            });
-
-            $('#police_station_permanent').html(upazilla_name);
-
-        })
-        .on('change', "#district_present", function () {
-            var upazilla = JSON.parse($("#upazilla").val());
-            var selected_district = $(this).children("option:selected").val();
-            var upazilla_name = '';
-
-            upazilla.forEach(element => {
-                if (element.district_id == selected_district) {
-                    upazilla_name += '<option value="' + element.id + '">' + element.name + '</option>';
-                }
-            });
-
-            $('#police_station_present').html(upazilla_name);
-        })
-        .on('change', '#same_as', function () {
-            var village = $("#village_present").val();
-            var post = $("#post_office_present").val();
-            var district = $("#district_present").val();
-            var policestation = $("#police_station_present").html();
-
-            $("#village_permanent").val(village);
-            $("#post_office_permanent").val(post);
-            $("#district_permanent").val(district);
-            $("#police_station_permanent").html(policestation);
-            $("#police_station_permanent").val($("#police_station_permanent").val());
-        })
-        .on("keyup", '#phon_validation', function () {
-            var valid = /^\d{0,11}(\.\d{0,2})?$/.test(this.value),
-                val = this.value;
-
-            if (!valid) {
-                console.log("Invalid input!");
-                this.value = val.substring(0, val.length - 1);
-            }
-        })
-        .on("keyup", '.exam_grade', function () {
-            var valid = /^\d{0,2}(\.\d{0,2})?$/.test(this.value),
-                val = this.value;
-            if (!valid) {
-                console.log("Invalid input!");
-                this.value = val.substring(0, val.length - 1);
-            }
-        })
-        .on('change', "#police_clearance_issue", function () {
-            var issue_date = new Date($("#police_clearance_issue").val());
-            var nextDate = new Date(issue_date.setDate(issue_date.getDate() + 180));
-            const today = new Date();
-            const time = Math.abs(today - nextDate);
-
-            const day = Math.ceil(time / (1000 * 60 * 60 * 24));
-
-            nextDate = `${nextDate.getDate()} ${nextDate.toLocaleString('default', { month: 'long' })} ${nextDate.getFullYear()}`;
-
-            var fields = `<div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="clearance_expire_date" class="form-label">Expire date</label>
-                                <input type="text" class="form-control" name="police_clearance_expired"
-                                    id="clearance_expire_date" value="${nextDate}" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="clearance_remaining" class="form-label">Remaining day</label>
-                                <input type="text" class="form-control" name="polisce_clearance_remaning"
-                                    id = "police_clearance"
-                                    value = "${day}"
-                                    readonly >
-                            </div>
-                        </div>`;
-
-            $("#police_clearanc").html(fields);
-
-        })
-
-        .on("keyup", '.transection_amount', function () {
-            var valid = /^\d{0,20}(\.\d{0,20})?$/.test(this.value),
-                val = this.value;
-            if (!valid) {
-                this.value = val.substring(0, val.length - 1);
-            }
-        })
         .on("keyup", '.phon_validation', function () {
             var valid = /^\d{0,11}(\.\d{0,2})?$/.test(this.value),
                 val = this.value;
@@ -525,66 +405,6 @@ function swal_alert(alert_icon, msg) {
                 $value = "";
             }
             $("#account_phone_feild").html($value);
-        })
-        .on("click", ".add-more", function () {
-            var content = $(this).attr("data");
-            var expanseModal = $("#expenseModal");
-            var modalContent = "";
-            var modalTitle = "";
-
-            if (content === "add-account") {
-                modalContent = `<form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Message:</label>
-                                        <textarea class="form-control" id="message-text"></textarea>
-                                    </div>
-                                </form>`;
-                modalTitle = "Add New Account";
-            } else if (content === "expense-type") {
-                modalContent = `<form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Message:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
-                                </div>
-                            </form>`;
-                modalTitle = "Add Expanse type";
-            } else if (content === "payment-method") {
-                modalContent = `<form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                    <input type="text" class="form-control" id="recipient-name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">Message:</label>
-                                    <textarea class="form-control" id="message-text"></textarea>
-                                </div>
-                            </form>`;
-                modalTitle = "Add Payment type";
-            } else if (content === "add-payer") {
-                modalContent = `<form>
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                        <input type="text" class="form-control" id="recipient-name">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Message:</label>
-                                        <textarea class="form-control" id="message-text"></textarea>
-                                    </div>
-                                </form>`;
-                modalTitle = "Add Payer";
-            }
-            expanseModal.find('.expenseModal').html(modalContent);
-            $('.expenseModalLabel').val(modalTitle);
-            expanseModal.modal("show");
-
         });
 
 })(jQuery);

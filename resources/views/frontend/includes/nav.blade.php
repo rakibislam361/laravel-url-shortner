@@ -9,7 +9,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-
+                <li class="nav-item">
+                    <x-utils.bsLink :href="route('frontend.index')" :active="activeClass(Route::is('frontend.index'))"
+                        :text="__('Home')" class="nav-link" />
+                </li>
                 @guest
                     <li class="nav-item">
                         <x-utils.bsLink :href="route('frontend.auth.register')"

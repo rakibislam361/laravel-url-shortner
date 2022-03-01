@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Infinety\Alerts\AlertServiceProvider::class,
+        Torann\GeoIP\GeoIPServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -242,6 +243,7 @@ return [
 
         // mailjet aliases
         'Mailjet' => Mailjet\LaravelMailjet\Facades\Mailjet::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
     ],
 
 ];

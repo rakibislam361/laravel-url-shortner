@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\BowsingInformationController;
 use App\Http\Controllers\Frontend\TermsController;
 
 use App\Http\Controllers\Frontend\HomeController;
@@ -24,4 +25,7 @@ Route::get('terms', [TermsController::class, 'index'])
         $trail->parent('frontend.index')
             ->push(__('Terms & Conditions'), route('frontend.pages.terms'));
     });
+
 Route::resource('url_shortener', UrlShortnerController::class);
+Route::post('url_shortener_qrcode', [UrlShortnerController::class, 'qurCodeGenerate'])->name('qrcode.create');
+Route::resource('browsing/information', BowsingInformationController::class);

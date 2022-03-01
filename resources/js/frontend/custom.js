@@ -96,57 +96,21 @@
             });
             setProgressBar(--current);
         })
-        .on('change', '#same_as', function () {
-            var village = $("#village_present").val();
-            var post = $("#post_office_present").val();
-            var district = $("#district_present").val();
-            var policestation = $("#police_station_present").html();
+        .on("click", ".qr_code", function () {
+            var url = $(this).data('key');
+            var qrmodal = $("#qruCodeModal");
 
-            $("#village_permanent").val(village);
-            $("#post_office_permanent").val(post);
-            $("#district_permanent").val(district);
-            $("#police_station_permanent").html(policestation);
-            $("#police_station_permanent").val($("#police_station_permanent").val());
-        })
-        .on("keyup", '.phon_validation', function () {
-            var valid = /^\d{0,11}(\.\d{0,2})?$/.test(this.value),
-                val = this.value;
-
-            if (!valid) {
-                console.log("Invalid input!");
-                this.value = val.substring(0, val.length - 1);
-            }
-        })
-        .on("click", ".education_fields", function () {
-            div_id++;
-            var rdiv = 'removeclass' + div_id;
-            $('#education_fields').append(`
-                <div class="row ${rdiv}">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="degree_name[]" placeholder="Degree name">
-                    </div>
-                    <div class="col-md-3 col-sm-12">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="grade[]" id="grade" value=""
-                                placeholder="4.5 ">
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-12">
-                        {{ html()->select('elementary_passing_year[]', collect($years)->prepend('Select', ''), old('elementary_passing_year'))->class('form-control') }}
-                    </div>
-                    <div class="col-md-2 col-sm-12">
-                        <div class="input-group-btn">
-                            <button class="btn btn-danger remove_div" type="button" value="${div_id}">
-                                <span class="glyphicon glyphicon-minus" aria-hidden="true">
-                                </span>Remove</button>
-                        </div>
-                    </div>
-                </div>
-            <div class="clear"></div>`);
-        })
-        .on("click", ".remove_div", function () {
-            var div_id = $(this).val();
-            $('.removeclass' + div_id).remove();
+            axios.post('url_shortener_qrcode', {
+                    data: url
+                })
+                .then(response => {
+                    qrmodal.find('.modal-body').html(response.data)
+                    qrmodal.modal('show');
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+                .then(() => {});
         });
 
     function setProgressBar(curStep) {
