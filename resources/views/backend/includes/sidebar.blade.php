@@ -13,9 +13,23 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
                     <x-utils.link class="nav-link" :href="route('admin.dashboard')"
-                        :active="activeClass(Route::is('admin.dashboard'), 'active')"
                         icon="nav-icon fa fa-tachometer-alt" :text="__('Dashboard')"></x-utils.link>
                 </li>
+
+                @if ($logged_in_user->hasAllAccess())
+                    <li class="nav-item">
+                        <x-utils.link class="nav-link" :href="route('admin.information.index')"
+                            :active="activeClass(Route::is('admin.information.*'), 'active')" icon="fas fa-solid fa-link"
+                            :text="__('Browsing Information')">
+                        </x-utils.link>
+                    </li>
+                    <li class="nav-item">
+                        <x-utils.link class="nav-link" :href="route('admin.url.report', 'all')"
+                            :active="activeClass(Route::is('admin.url.report.*'), 'active')" icon="fas fa-solid fa-file"
+                            :text="__('Reports')">
+                        </x-utils.link>
+                    </li>
+                @endif
 
                 <i class="fa-solid "></i>
                 @if ($logged_in_user->hasAllAccess() || ($logged_in_user->can('admin.access.user.list') || $logged_in_user->can('admin.access.user.deactivate') || $logged_in_user->can('admin.access.user.reactivate') || $logged_in_user->can('admin.access.user.clear-session') || $logged_in_user->can('admin.access.user.impersonate') || $logged_in_user->can('admin.access.user.change-password')))

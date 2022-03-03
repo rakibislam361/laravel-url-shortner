@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Domains\Auth\Models\User;
 use App\Helpers\BrowserHelper;
 use App\Http\Controllers\Controller;
-use App\Models\BowsingInformation;
+use App\Models\Backend\Bowsinginformation;
 use App\Models\Url;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -42,29 +43,38 @@ class UrlShortnerController extends Controller
     public function store(Request $request)
     {
         session(['url' => $request->url]);
-
-        if (Auth::check()) {
+        if (Auth::user()) {
             $request->validate([
                 'url' => 'required|url',
             ]);
 
-            if (!Url::where('url', $request->url)->exists()) {
-                $generate_code = generate_number(3);
+            $generate_code = generate_number(3);
+            $url_check = Url::where('user_id', Auth::user()->id)
+                ->where('url', $request->url)->first();
+
+            if ($url_check) {
+                $url_check->url_code = $generate_code;
+                $url_check->generated_url = url('/') . '/' . $generate_code;
+                $url_check->user_ip = $_SERVER['REMOTE_ADDR'];
+                $url_check->save();
+                return redirect()->back()->withFlashSuccess("This URL shorted successfully");
+            } else {
                 $data = [
                     'url' => $request->url,
                     'url_code' => $generate_code,
                     'generated_url' => url('/') . '/' . $generate_code,
                     'user_id' => Auth::user()->id,
                     'user_ip' => $_SERVER['REMOTE_ADDR'],
+                    'status' => "active"
                 ];
+
                 Url::create($data);
-                $request->session()->flush();
+                $request->session()->forget('url');
+                return redirect()->back()->withFlashSuccess("This URL shorted successfully");
             }
-
-            return redirect()->route('frontend.index')->withFlashDanger("This URL already shorted");
+        } else {
+            return redirect()->route('frontend.auth.login');
         }
-
-        return redirect()->route('frontend.auth.login');
     }
 
     /**
@@ -75,13 +85,16 @@ class UrlShortnerController extends Controller
      */
     public function show($id)
     {
-        $url = Url::findOrFail($id);
+        $url = Url::where('id', $id)->where('status', 'active')->first();
         if ($url) {
             $redirect_url = $url->url;
             $browser_information = $this->getBrosingInformation();
+            $browser_information['url_id'] = $id;
             $browser_information['visit_url'] = $redirect_url;
-            BowsingInformation::create($browser_information);
+            Bowsinginformation::create($browser_information);
             return redirect($redirect_url);
+        } else {
+            return redirect()->back()->withFlashSuccess("This URL has been Expired");
         }
     }
 
@@ -144,7 +157,7 @@ class UrlShortnerController extends Controller
             'longitude' => $location->lon,
             'browser' => $getbrowser,
             'device' => $getdevice,
-            'active_status' => auth()->user()->isActive(),
+            'active_status' => "",
             'previous_url' => "",
             'visit_url' => "",
         ];

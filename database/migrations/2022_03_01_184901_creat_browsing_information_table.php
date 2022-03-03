@@ -15,7 +15,8 @@ class CreatBrowsingInformationTable extends Migration
     {
         Schema::create('browsing_information', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->length(10)->nullable();
+            $table->integer('user_id')->length(11)->nullable();
+            $table->integer('url_id')->length(11)->nullable();
             $table->string('user_ip', 100)->nullable();
             $table->string('location', 100)->nullable();
             $table->string('latitude', 100)->nullable();

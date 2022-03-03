@@ -14,17 +14,16 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/brand/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('uploads/' . get_setting('fabicon')) }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('uploads/' . get_setting('fabicon')) }}">
-    <link rel="manifest" href="{{ asset('img/brand//site.webmanifest') }}">
 
     @yield('meta')
 
     <link href="{{ asset('css/icons.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> --}}
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.jqueryui.min.css">
-    <link rel="stylesheet" href="{{ asset('build/css/intlTelInput.css"') }}>
-    
+    <link rel=" stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <link rel=" stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" />
+
     @stack('before-styles')
     <link href=" {{ mix('css/backend.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/adminlte.css') }}" rel="stylesheet">
@@ -79,16 +78,18 @@
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/backend.js') }}"></script>
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js">
-    </script>
-
-    <script src="{{ asset('build/js/intlTelInput-jquery.min.js') }}"></script>
-
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+
     <script src="/livewire/livewire.js?id=b09cb328e689f1bb8d77" data-turbo-eval="false" data-turbolinks-eval="false">
-    </script>
-    <script data-turbo-eval="false" data-turbolinks-eval="false">
         window.livewire = new Livewire();
         window.livewire.devTools(true);
         window.Livewire = window.livewire;

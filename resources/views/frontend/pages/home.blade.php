@@ -31,13 +31,14 @@
                         </x-forms.post>
                     </div>
                 </div>
-                @if (Auth::check())
+                @if (Auth::user())
                     <x-backend.card xmlns:livewire="">
                         <x-slot name="body">
                             <livewire:frontend.url-table />
                         </x-slot>
                     </x-backend.card>
                 @endif
+
             </div>
         </div> <!-- row-->
     </div> <!-- container-->

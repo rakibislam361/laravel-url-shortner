@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Helpers\BrowserHelper;
 use Torann\GeoIP\Facades\GeoIP;
 
-class BowsingInformationController extends Controller
+class BrowsingInformationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +16,7 @@ class BowsingInformationController extends Controller
      */
     public function index()
     {
+        return view("backend.content.browsingInformation.index");
     }
 
     /**

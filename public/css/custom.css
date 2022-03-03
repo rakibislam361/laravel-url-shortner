@@ -19,6 +19,16 @@ input {
     padding: 2px;
 }
 
+
+.table_id {
+    margin: 0 auto;
+    width: 100%;
+    clear: both;
+    border-collapse: collapse;
+    table-layout: fixed; // ***********add this
+    word-wrap: break-word; // ***********and this
+}
+
 .btn {
     background-color: #0f9647;
     color: aliceblue;

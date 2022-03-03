@@ -17,9 +17,8 @@
 
     <link rel="stylesheet" href="{{ asset('css/icons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-
     <link href="{{ mix('css/frontend.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('build/css/intlTelInput.css') }}">
+
     <livewire:styles />
     @stack('after-styles')
 </head>
@@ -39,7 +38,7 @@
         <main>
             @yield('content')
         </main>
-        @include('frontend.includes.footer')
+        {{-- @include('frontend.includes.footer') --}}
     </div> <!-- app -->
 
     <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>
@@ -50,8 +49,6 @@
     <script src="{{ mix('js/frontend.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src={{ asset('js/sweetalert.js') }}></script>
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="{{ asset('build/js/intlTelInput-jquery.min.js') }}"></script>
     @stack('after-scripts')
     @include('Alerts::alerts')
 </body>

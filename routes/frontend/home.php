@@ -28,4 +28,3 @@ Route::get('terms', [TermsController::class, 'index'])
 
 Route::resource('url_shortener', UrlShortnerController::class);
 Route::post('url_shortener_qrcode', [UrlShortnerController::class, 'qurCodeGenerate'])->name('qrcode.create');
-Route::resource('browsing/information', BowsingInformationController::class);
