@@ -55,7 +55,8 @@
                                     @endif
 
                                 </td>
-                                <td><span class="badge badge-danger">{{ $most_visit['visits'] }}</span></td>
+                                <td><span class="badge badge-danger">{{ $value->visit_count }}</span>
+                                </td>
                                 <td>{{ $value->user_ip }}</td>
                                 <td>
                                     @if ($value->status == 'active')

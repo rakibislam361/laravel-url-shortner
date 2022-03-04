@@ -48,7 +48,7 @@
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/frontend.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
-    <script src={{ asset('js/sweetalert.js') }}></script>
+    <script src="{{ asset('js/sweetalert.js') }}""></script>
     @stack('after-scripts')
     @include('Alerts::alerts')
 </body>

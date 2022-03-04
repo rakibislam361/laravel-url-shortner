@@ -12,8 +12,8 @@
                             <div class="form-row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <input value="{{ session()->get('url') }}" name="url" type="text"
-                                            class="form-control" placeholder="https://www.example.com">
+                                        <input value="" name="url" type="text" class="form-control"
+                                            placeholder="https://www.example.com">
                                     </div>
                                     @if ($errors->has('url'))
                                         <p class="text-danger">

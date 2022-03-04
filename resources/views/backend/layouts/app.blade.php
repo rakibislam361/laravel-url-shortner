@@ -77,7 +77,7 @@
     @stack('before-scripts')
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/backend.js') }}"></script>
+    <script src="{{ asset('js/backend.js') }}"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 
@@ -89,7 +89,8 @@
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
-    <script src="/livewire/livewire.js?id=b09cb328e689f1bb8d77" data-turbo-eval="false" data-turbolinks-eval="false">
+    <script src="{{ asset('/livewire/livewire.js?id=b09cb328e689f1bb8d77') }}" data-turbo-eval="false"
+        data-turbolinks-eval="false">
         window.livewire = new Livewire();
         window.livewire.devTools(true);
         window.Livewire = window.livewire;

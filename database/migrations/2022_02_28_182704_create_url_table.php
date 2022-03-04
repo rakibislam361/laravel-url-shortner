@@ -18,6 +18,7 @@ class CreateUrlTable extends Migration
             $table->text('url');
             $table->string('url_code');
             $table->string('generated_url');
+            $table->integer('visit_count');
             $table->unsignedBigInteger('user_id');
             $table->string('user_ip');
             $table->string('status', 100)->nullable();

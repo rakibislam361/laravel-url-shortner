@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Domains\Auth\Models\User;
 use App\Helpers\BrowserHelper;
 use App\Http\Controllers\Controller;
-use App\Models\Backend\Bowsinginformation;
+use App\Models\Backend\Browsinginformation;
 use App\Models\Url;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
@@ -56,6 +56,7 @@ class UrlShortnerController extends Controller
                 $url_check->url_code = $generate_code;
                 $url_check->generated_url = url('/') . '/' . $generate_code;
                 $url_check->user_ip = $_SERVER['REMOTE_ADDR'];
+                $url_check->visit_count = $url_check->visit_count + 1;
                 $url_check->save();
                 return redirect()->back()->withFlashSuccess("This URL shorted successfully");
             } else {
@@ -91,7 +92,7 @@ class UrlShortnerController extends Controller
             $browser_information = $this->getBrosingInformation();
             $browser_information['url_id'] = $id;
             $browser_information['visit_url'] = $redirect_url;
-            Bowsinginformation::create($browser_information);
+            Browsinginformation::create($browser_information);
             return redirect($redirect_url);
         } else {
             return redirect()->back()->withFlashSuccess("This URL has been Expired");

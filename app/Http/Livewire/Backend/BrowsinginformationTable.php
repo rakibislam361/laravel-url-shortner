@@ -25,7 +25,7 @@ class BrowsinginformationTable extends DataTableComponent
 
   public function query(): Builder
   {
-    return Browsinginformation::with('user','url');
+    return Browsinginformation::with('user', 'url');
   }
 
   /**
@@ -43,14 +43,14 @@ class BrowsinginformationTable extends DataTableComponent
       Column::make(__('User IP'), 'user_ip')
         ->addClass('text-left')
         ->searchable(),
-        Column::make(__('visit url'), 'visit_url')
+      Column::make(__('visit url'), 'visit_url')
         ->addClass('text-left')
         ->searchable()
         ->format(function ($value) {
           $strln = strlen($value);
           if ($strln > 100) {
-            return '"'.substr($value, 0, 100).'..."';
-          }else{
+            return '"' . substr($value, 0, 100) . '..."';
+          } else {
             return $value;
           }
         })
@@ -73,9 +73,6 @@ class BrowsinginformationTable extends DataTableComponent
       Column::make(__('Device'), 'device')
         ->addClass('text-left')
         ->searchable(),
-      Column::make(__('Request from'), 'user_ip')
-        ->addClass('text-left')
-        ->searchable(),
       Column::make(__('Status'), 'url.status')
         ->addClass('text-left')
         ->searchable()
@@ -86,13 +83,13 @@ class BrowsinginformationTable extends DataTableComponent
           return '<span class="badge badge-danger">Expired</span>';
         })
         ->asHtml(),
-      Column::make(__('GET QR'), 'url')
-        ->addClass('text-left')
-        ->searchable()
-        ->format(function ($value) {
-          return '<label data-key="' . $value . '"  class="btn btn-light qr_code"><i class="fa fa-qrcode" aria-hidden="true"></i></label>';
-        })
-        ->asHtml(),
+      // Column::make(__('GET QR'), 'url')
+      //   ->addClass('text-left')
+      //   ->searchable()
+      //   ->format(function ($value) {
+      //     return '<label data-key="' . $value . '"  class="btn btn-light qr_code"><i class="fa fa-qrcode" aria-hidden="true"></i></label>';
+      //   })
+      //   ->asHtml(),
       // Column::make('Actions')
       //   ->addClass('text-center')
       //   ->format(function ($value, $column, $row) {

@@ -106,6 +106,20 @@ CREATE TABLE IF NOT EXISTS `browsing_information` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `url`;
+CREATE TABLE IF NOT EXISTS `url` (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `generated_url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visit_count` int(11) DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `user_ip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+COMMIT;
 --
 -- Table structure for table `failed_jobs`
 --

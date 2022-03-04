@@ -49,11 +49,11 @@ class UrlController extends Controller
         $generate_code = generate_number(3);
         $url_check = Url::where('user_id', Auth::user()->id)
             ->where('url', $request->url)->first();
-
         if ($url_check) {
             $url_check->url_code = $generate_code;
             $url_check->generated_url = url('/') . '/' . $generate_code;
             $url_check->user_ip = $_SERVER['REMOTE_ADDR'];
+            $url_check->visit_count = $url_check->visit_count + 1;
             $url_check->save();
             return redirect()->back()->withFlashSuccess("This URL shorted successfully");
         } else {
@@ -138,7 +138,6 @@ class UrlController extends Controller
     public function urlReport(Request $request)
     {
         $report_data = Url::with('user');
-        $most_visit = 0;
         if ($request->name == "day") {
             $report_data = $report_data->whereDate('created_at', Carbon::today());
         }
@@ -156,6 +155,6 @@ class UrlController extends Controller
         }
 
         $report_data = $report_data->orderBy('id', 'DESC')->get();
-        return view("backend.content.url.report", compact('report_data', 'most_visit'));
+        return view("backend.content.url.report", compact('report_data'));
     }
 }
