@@ -92,6 +92,8 @@ class UrlShortnerController extends Controller
             $browser_information = $this->getBrosingInformation();
             $browser_information['url_id'] = $id;
             $browser_information['visit_url'] = $redirect_url;
+            $url['visit_count'] = $url['visit_count'] + 1;
+            $url->save();
             Browsinginformation::create($browser_information);
             return redirect($redirect_url);
         } else {
