@@ -12,7 +12,7 @@
                             <div class="form-row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <input value="" name="url" type="text" class="form-control"
+                                        <input value="{{ session('url') }}" name="url" type="text" class="form-control"
                                             placeholder="https://www.example.com">
                                     </div>
                                     @if ($errors->has('url'))

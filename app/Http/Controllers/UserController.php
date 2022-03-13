@@ -10,7 +10,7 @@ use App\User;
 
 class UserController extends Controller
 {
-    
+
     private $users = "users";
     private $roles = "user_roles";
 
@@ -27,7 +27,7 @@ class UserController extends Controller
         //     ->orderBy('users.created_at', 'desc')
         //     ->paginate(15);
 
-        $users = User::with(['role'])->orderBy('id','desc')->paginate(10);
+        $users = User::with(['role'])->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.pages.user.show-user')->with('users', $users);
     }
@@ -45,7 +45,7 @@ class UserController extends Controller
         return view('admin.pages.user.add-user')->with('roles', $roles);
     }
 
-   
+
     /**
      * Store a newly created resource in storage.
      *
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate( $request,[
+        $this->validate($request, [
             'active' => 'numeric|max:1',
             'niceName' => 'string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -64,18 +64,18 @@ class UserController extends Controller
             'phone' => 'required|regex:/(01)[0-9]{9}/',
             'gender' => 'string|max:155',
             'image' => 'mimes:jpeg,jpg,png,gif|nullable|max:1024',
-       ]);
+        ]);
 
-      
-		$user = new User;
+
+        $user = new User;
         $user->name = $request->UserName;
-		$user->email = $request->email;
+        $user->email = $request->email;
         $user->password = Hash::make($request->password);
-		$user->nice_name = $request->niceName;
-		$user->gender = $request->gender;
-		$user->block_status = $request->active;
-		$user->phone = $request->phone;
-		$user->role_id = $request->userRole;
+        $user->nice_name = $request->niceName;
+        $user->gender = $request->gender;
+        $user->block_status = $request->active;
+        $user->phone = $request->phone;
+        $user->role_id = $request->userRole;
 
         // Insert Image
         $image = $request->file('image');
@@ -87,7 +87,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Add User Successfull');
+        return redirect()->back()->with('success', 'Added New User Successfully');
     }
 
     /**
@@ -98,7 +98,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $users = User::with(['role'])->orderBy('id','desc')->paginate(10);
+        $users = User::with(['role'])->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.pages.user.show-user')->with('users', $users);
     }
@@ -127,7 +127,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate( $request,[
+        $this->validate($request, [
             'active' => 'numeric|max:1',
             'niceName' => 'string|max:255',
             'email' => 'required|string|email|max:255',
@@ -136,13 +136,13 @@ class UserController extends Controller
             'userRole' => 'required|numeric|max:99',
             'gender' => 'string|max:155',
             'image' => 'mimes:jpeg,jpg,png,gif|nullable|max:1024',
-       ]);
+        ]);
 
         $user = User::find($id);
         // Handle File Upload
-        if($request->hasFile('image')){
-            if(file_exists('uploads/users/'.$user->picture)){
-                unlink('uploads/users/'.$user->picture);
+        if ($request->hasFile('image')) {
+            if (file_exists('uploads/users/' . $user->picture)) {
+                unlink('uploads/users/' . $user->picture);
             }
             // Get filename with the extension
             $filenameWithExt = $request->file('image')->getClientOriginalName();
@@ -151,7 +151,7 @@ class UserController extends Controller
             // Get just ext
             $extension = $request->file('image')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload Image
             //Input::file('image')->move('uploads/users', $fileNameToStore);
             $request->file('image')->move('uploads/users', $fileNameToStore);
@@ -164,14 +164,12 @@ class UserController extends Controller
                     'nice_name' => $request->input('niceName'),
                     'phone' => $request->input('phone'),
                     'gender' => $request->input('gender'),
-                    'picture' => $fileNameToStore ,
+                    'picture' => $fileNameToStore,
                     'block_status' => $request->input('active') == 1 ? 1 : 0,
                     'role_id' => $request->input('userRole'),
                     'updated_at' => DB::raw('now()')
                 ]
             );
-
-
         } else {
             DB::table($this->users)->where('id', $id)->update(
                 [
@@ -197,10 +195,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-       // DB::table($this->users)->where('id', '=', $id)->delete();
-		$user = User::find($id);
-        if(file_exists('uploads/users/'.$user->picture)){
-            unlink('uploads/users/'.$user->picture);
+        // DB::table($this->users)->where('id', '=', $id)->delete();
+        $user = User::find($id);
+        if (file_exists('uploads/users/' . $user->picture)) {
+            unlink('uploads/users/' . $user->picture);
         }
         $user->delete();
         return redirect()->back()->with('success', 'User deleted successfully');
